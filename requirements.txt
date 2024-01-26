@@ -15,8 +15,9 @@ mypy-extensions==1.0.0
 packaging==23.2
 pathspec==0.12.1
 platformdirs==4.1.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
 SQLAlchemy==2.0.25
 typing_extensions==4.9.0
 Werkzeug==3.0.1
 WTForms==3.1.2
-psycopg2-binary==2.9.1

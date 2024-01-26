@@ -108,3 +108,16 @@ Your Name
 - GitHub: [sureshbabudj](https://github.com/sureshbabudj)
 - Email: sureshbabudj@gmail.com
 
+
+### creat db in psql
+
+```psql
+CREATE DATABASE ultimate_store;
+CREATE USER admin WITH PASSWORD 'root';
+ALTER ROLE admin SET client_encoding TO 'utf8';
+ALTER ROLE admin SET default_transaction_isolation TO 'read committed';
+ALTER ROLE admin SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE ultimate_store TO admin;
+
+```
+

@@ -1,22 +1,24 @@
 import os
+from dotenv import load_dotenv
 import secrets
 from flask import Flask, flash, redirect, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from forms import BookForm
 
+# Load environment variables from .env
+load_dotenv()
+
+# Print the loaded environment variables
+print("Loaded environment variables:")
+for key, value in os.environ.items():
+    print(f"{key}: {value}")
+
 app = Flask(__name__)
 
 # Use environment variables for sensitive information
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(16))
-
-# Configure the database URI based on the environment
-if app.env == 'production':
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')  # Use Heroku-provided DATABASE_URL for production
-else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-
-# Suppress a warning about track modifications, it's not needed for now
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', "postgresql://admin:root@localhost/ultimate_store")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -56,33 +58,39 @@ def admin():
     books = Book.query.all()
     return render_template("admin.html", form=form, books=books)
 
-# ... (rest of your routes remain unchanged)
+@app.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
+def edit_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    form = BookForm(obj=book)
 
-# Manually create tables within the application context
+    if form.validate_on_submit():
+        book.title = form.title.data
+        book.author = form.author.data
+        book.price = form.price.data
+        book.image_url = form.image_url.data
+        db.session.commit()
+        return redirect(url_for('admin'))
+
+    return render_template('edit_book.html', form=form, book=book)
+
+@app.route('/delete_book/<int:book_id>')
+def delete_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    return redirect(url_for('admin'))
+
+@app.route('/')
+def home():
+    books = Book.query.all()
+    return render_template('home.html', books=books)
+
 with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-    import sys
-
-    if '--env=production' in sys.argv:
-        # In production, use a production-ready server like Gunicorn
-        import os
-        from gunicorn import GunicornApplication
-
-        class StandaloneApplication(GunicornApplication):
-            def init(self, parser, opts, args):
-                return {
-                    'bind': f"0.0.0.0:{int(os.environ.get('PORT', 5000))}",
-                    'workers': 1
-                }
-
-        options = {
-            'bind': '0.0.0.0:5000',
-            'workers': 1,
-        }
-        StandaloneApplication(app, options).run()
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.run(debug=False)
     else:
-        # In development, use the Flask development server
         app.run(debug=True)
 
