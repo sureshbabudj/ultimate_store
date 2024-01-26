@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h2>Admin Page</h2>
+    {% set submit_text = 'Add Book' %}
+    {% include 'book_form.html' %}
+
+    <h2>Book List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Image URL</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>${{ book.price }}</td>
+                    <td>{{ book.image_url }}</td>
+                    <td><a href="{{ url_for('edit_book', book_id=book.id) }}">Edit</a></td>
+                    <td><a href="{{ url_for('delete_book', book_id=book.id) }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
