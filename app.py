@@ -11,8 +11,9 @@ load_dotenv()
 
 # Print the loaded environment variables
 print("Loaded environment variables:")
-for key, value in os.environ.items():
-    print(f"{key}: {value}")
+print(f"FLASK_SECRET_KEY: {os.environ.get('FLASK_SECRET_KEY')}")
+print(f"DATABASE_URL: {os.environ.get('DATABASE_URL')}")
+print(f"FLASK_ENV: {os.environ.get('FLASK_ENV')}")
 
 app = Flask(__name__)
 
