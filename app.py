@@ -1,9 +1,11 @@
 import os
+from datetime import datetime
 from dotenv import load_dotenv
 import secrets
-from flask import Flask, flash, redirect, render_template, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_assets import Environment, Bundle
 from forms import BookForm
 
 # Load environment variables from .env
@@ -21,6 +23,37 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(16))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', "postgresql://admin:root@localhost/ultimate_store")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize Flask-Assets
+assets = Environment()
+assets.init_app(app)
+
+# Define CSS and JS bundles with minification
+css_bundle = Bundle(
+    'css/bootstrap.css',
+    'css/font-awesome.min.css',
+    'css/owl.carousel.css',
+    'css/responsive.css',
+    'css/style.css',
+    filters='cssmin',  # Apply CSS minification
+    output='gen/packed.css'
+)
+
+js_bundle = Bundle(
+    'js/bootstrap.js',
+    'js/bxslider.min.js',
+    'js/jquery.easing.1.3.min.js',
+    'js/jquery.sticky.js',
+    'js/main.js',
+    'js/owl.carousel.min.js',
+    'js/script.slider.js',
+    filters='jsmin',  # Apply JS minification
+    output='gen/packed.js'
+)
+
+# Register the bundles
+assets.register('css_all', css_bundle)
+assets.register('js_all', js_bundle)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -83,8 +116,20 @@ def delete_book(book_id):
 
 @app.route('/')
 def home():
-    books = Book.query.all()
-    return render_template('home.html', books=books)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('limit', 8, type=int)  
+
+    books = Book.query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    # Calculate the total number of pages
+    total_books = Book.query.count()
+    total_pages = (total_books // per_page) + (1 if total_books % per_page > 0 else 0)
+
+    return render_template('home.html', books=books.items, current_page=page, total_pages=total_pages)
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
 
 with app.app_context():
     db.create_all()

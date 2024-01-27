@@ -1,7 +1,5 @@
-I apologize for any confusion. Here's an improved and corrected version of the `README.md` file:
 
-````markdown
-# Flask Children's Bookstore
+# Ultimate Bookstore
 
 This is a simple Flask application for a children's bookstore with the ability to add books. It uses Flask-SQLAlchemy for database management and Flask-Migrate for handling database migrations.
 
@@ -19,14 +17,13 @@ Follow these steps to set up and run the Flask application.
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-flask-bookstore.git
+   git clone https://github.com/sureshbabudj/ultimate_store.git
    ```
-````
 
 2. **Navigate to the project directory:**
 
    ```bash
-   cd your-flask-bookstore
+   cd ultimate_store
    ```
 
 3. **Create a virtual environment (optional but recommended):**
@@ -68,7 +65,7 @@ Before running the application, perform the following database migration steps:
 2. **Generate a migration script:**
 
    ```bash
-   flask db migrate -m "Add image_url column to Book model"
+   flask db migrate -m "{SOME_COMMENT}"
    ```
 
 3. **Apply the migration:**
@@ -101,15 +98,15 @@ When you're done using the application, deactivate the virtual environment:
 deactivate
 ```
 
-## Author
 
-Your Name
+### Env Variables
 
-- GitHub: [sureshbabudj](https://github.com/sureshbabudj)
-- Email: sureshbabudj@gmail.com
+FLASK_SECRET_KEY={HEX16}
+DATABASE_URL={DB}
+FLASK_ENV={production|dev}
 
 
-### creat db in psql
+### Creat database in postgres sql
 
 ```psql
 CREATE DATABASE ultimate_store;
@@ -120,4 +117,13 @@ ALTER ROLE admin SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE ultimate_store TO admin;
 
 ```
+
+## Author
+
+Suresh Babu Dhanaraj
+
+- GitHub: [sureshbabudj](https://github.com/sureshbabudj)
+- Email: sureshbabudj@gmail.com
+
+
 

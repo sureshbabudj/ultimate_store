@@ -13,3 +13,7 @@ instance
 # Instance directory and SQLite database
 instance/
 site.db
+
+# assets
+.webassets-cache
+static/gen
