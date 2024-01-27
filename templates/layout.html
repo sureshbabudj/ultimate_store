@@ -27,36 +27,39 @@
       rel="stylesheet"
       type="text/css"
     />
+    <!--
 
-    <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/bootstrap.css') }}"
     />
 
-    <!-- Font Awesome CSS -->
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/font-awesome.min.css') }}"
     />
 
-    <!-- Owl Carousel CSS -->
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/owl.carousel.css') }}"
     />
 
-    <!-- Responsive CSS -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/responsive.css') }}"
     />
 
-    <!-- Responsive CSS -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+  -->
+
+  {% assets "css_all" %}
+      <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -291,26 +294,17 @@
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
-
-    <!-- Bootstrap JS -->
+    <!--
     <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-
-    <!-- BxSlider JS -->
     <script src="{{ url_for('static', filename='js/bxslider.min.js') }}"></script>
-
-    <!-- jQuery Easing JS -->
     <script src="{{ url_for('static', filename='js/jquery.easing.1.3.min.js') }}"></script>
-
-    <!-- jQuery Sticky JS -->
     <script src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
-
-    <!-- Owl Carousel JS -->
     <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
-
-    <!-- Script Slider JS -->
     <script src="{{ url_for('static', filename='js/script.slider.js') }}"></script>
-
-     <!-- Main JS -->
      <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    -->
+    {% assets "js_all" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
   </body>
 </html>
