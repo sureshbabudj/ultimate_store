@@ -6,7 +6,6 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError
 from flask_migrate import Migrate
-from flask_assets import Environment, Bundle
 from forms import BookForm
 
 # Load environment variables from .env
@@ -25,37 +24,6 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', "postgresql://admin:root@localhost/ultimate_store")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_SIZE'] = 20
-
-# Initialize Flask-Assets
-assets = Environment()
-assets.init_app(app)
-
-# Define CSS and JS bundles with minification
-css_bundle = Bundle(
-    'css/bootstrap.css',
-    'css/font-awesome.min.css',
-    'css/owl.carousel.css',
-    'css/responsive.css',
-    'css/style.css',
-    filters='cssmin',  # Apply CSS minification
-    output='gen/packed.css'
-)
-
-js_bundle = Bundle(
-    'js/bootstrap.js',
-    'js/bxslider.min.js',
-    'js/jquery.easing.1.3.min.js',
-    'js/jquery.sticky.js',
-    'js/main.js',
-    'js/owl.carousel.min.js',
-    'js/script.slider.js',
-    filters='jsmin',  # Apply JS minification
-    output='gen/packed.js'
-)
-
-# Register the bundles
-assets.register('css_all', css_bundle)
-assets.register('js_all', js_bundle)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
