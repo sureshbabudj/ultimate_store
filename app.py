@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import secrets
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
 from flask_migrate import Migrate
 from flask_assets import Environment, Bundle
 from forms import BookForm
@@ -73,23 +74,31 @@ def admin():
     form = BookForm()
 
     if form.validate_on_submit():
-        # Check if a book with the same title already exists
-        existing_book = Book.query.filter_by(title=form.title.data).first()
-        if existing_book:
-            flash('Book with the same title already exists. Choose a different title.', 'error')
-        else:
-            new_book = Book(
-                title=form.title.data,
-                author=form.author.data,
-                price=form.price.data,
-                image_url=form.image_url.data,
-            )
-            db.session.add(new_book)
-            db.session.commit()
-            flash('Book added successfully!', 'success')
+        try:
+            existing_book = Book.query.filter_by(title=form.title.data).first()
+            if existing_book:
+                flash('Book with the same title already exists. Choose a different title.', 'error')
+            else:
+                new_book = Book(
+                    title=form.title.data,
+                    author=form.author.data,
+                    price=form.price.data,
+                    image_url=form.image_url.data,
+                )
+                db.session.add(new_book)
+                db.session.commit()
+                flash('Book added successfully!', 'success')
+        except SQLAlchemyError as e:
+            flash(f'Database error: {str(e)}', 'error')
+
         return redirect(url_for("home"))
 
-    books = Book.query.all()
+    try:
+        books = Book.query.all()
+    except SQLAlchemyError as e:
+        flash(f'Database error: {str(e)}', 'error')
+        books = []
+
     return render_template("admin.html", form=form, books=books)
 
 @app.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
@@ -98,11 +107,15 @@ def edit_book(book_id):
     form = BookForm(obj=book)
 
     if form.validate_on_submit():
-        book.title = form.title.data
-        book.author = form.author.data
-        book.price = form.price.data
-        book.image_url = form.image_url.data
-        db.session.commit()
+        try:
+            book.title = form.title.data
+            book.author = form.author.data
+            book.price = form.price.data
+            book.image_url = form.image_url.data
+            db.session.commit()
+        except SQLAlchemyError as e:
+            flash(f'Database error: {str(e)}', 'error')
+
         return redirect(url_for('admin'))
 
     return render_template('edit_book.html', form=form, book=book)
@@ -110,22 +123,26 @@ def edit_book(book_id):
 @app.route('/delete_book/<int:book_id>')
 def delete_book(book_id):
     book = Book.query.get_or_404(book_id)
-    db.session.delete(book)
-    db.session.commit()
+    try:
+        db.session.delete(book)
+        db.session.commit()
+    except SQLAlchemyError as e:
+        flash(f'Database error: {str(e)}', 'error')
+
     return redirect(url_for('admin'))
 
 @app.route('/')
 def home():
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('limit', 8, type=int)  
+    per_page = request.args.get('limit', 8, type=int)
 
-    books = Book.query.paginate(page=page, per_page=per_page, error_out=False)
-    
-    # Calculate the total number of pages
-    total_books = Book.query.count()
-    total_pages = (total_books // per_page) + (1 if total_books % per_page > 0 else 0)
+    try:
+        books = Book.query.paginate(page=page, per_page=per_page, error_out=False)
+    except SQLAlchemyError as e:
+        flash(f'Database error: {str(e)}', 'error')
+        books = []
 
-    return render_template('home.html', books=books.items, current_page=page, total_pages=total_pages)
+    return render_template('home.html', books=books.items, current_page=page, total_pages=books.pages)
 
 @app.context_processor
 def inject_now():
