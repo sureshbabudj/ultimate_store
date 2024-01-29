@@ -1,15 +1,10 @@
-{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
-%} {% for category, message in messages %}
-<div class="alert alert-{{ category }}">{{ message }}</div>
-{% endfor %} {% endif %} {% endwith %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ultimate Store</title>
+    <title>{{ context.pageTitle }} | Ultimate Store</title>
 
     <!-- Google Fonts -->
     <link
@@ -38,15 +33,40 @@
     <![endif]-->
   </head>
   <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="container">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
     <div class="header-area">
       <div class="container">
         <div class="row">
           <div class="col-md-8">
             <div class="user-menu">
               <ul>
-                <li>
-                  <a href="#"><i class="fa fa-user"></i> My Account</a>
+                {% if current_user %}
+                <!-- User is logged in, show My Account -->
+                <li class="dropdown dropdown-small list-inline-item">
+                    <a
+                        data-toggle="dropdown"
+                        data-hover="dropdown"
+                        class="dropdown-toggle"
+                        href="#"
+                    ><span class="key">My Account:</span
+                        ><span class="value">{{ current_user.username }} </span><b class="caret"></b
+                    ></a>
+                    <!-- Add your dropdown items here for My Account -->
+                    <ul class="dropdown-menu">
+                        <!-- Example: <li><a href="#">Profile</a></li> -->
+                        <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+                        <!-- Add more items as needed -->
+                    </ul>
                 </li>
+                {% endif %}
                 <li>
                   <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
                 </li>
@@ -57,7 +77,7 @@
                   <a href="#"><i class="fa fa-user"></i> Checkout</a>
                 </li>
                 <li>
-                  <a href="#"><i class="fa fa-user"></i> Login</a>
+                  <a href="{{ url_for('auth.login') }}"><i class="fa fa-user"></i> Login</a>
                 </li>
               </ul>
             </div>
@@ -65,41 +85,37 @@
 
           <div class="col-md-4">
             <div class="header-right">
-              <ul class="list-unstyled list-inline">
-                <li class="dropdown dropdown-small list-inline-item">
-                  <a
-                    data-toggle="dropdown"
-                    data-hover="dropdown"
-                    class="dropdown-toggle"
-                    href="#"
-                    ><span class="key">currency :</span
-                    ><span class="value">USD </span><b class="caret"></b
-                  ></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">USD</a></li>
-                    <li><a href="#">INR</a></li>
-                    <li><a href="#">GBP</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown dropdown-small list-inline-item">
-                  <a
-                    data-toggle="dropdown"
-                    data-hover="dropdown"
-                    class="dropdown-toggle"
-                    href="#"
-                    ><span class="key">language :</span
-                    ><span class="value">English </span><b class="caret"></b
-                  ></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">English</a></li>
-                    <li><a href="#">French</a></li>
-                    <li><a href="#">German</a></li>
-                  </ul>
-                </li>
-              </ul>
+                <ul class="list-unstyled list-inline">
+                    <li class="dropdown dropdown-small list-inline-item">
+                        <a
+                            data-toggle="dropdown"
+                            data-hover="dropdown"
+                            class="dropdown-toggle"
+                            href="#"
+                        ><span class="key">currency :</span
+                            ><span class="value">USD </span><b class="caret"></b
+                        ></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">USD</a></li>
+                            <li><a href="#">INR</a></li>
+                            <li><a href="#">GBP</a></li>
+                        </ul>
+                    </li>
+        
+                    <li class="dropdown dropdown-small list-inline-item">
+                        {% if current_user %}
+                            <!-- User is logged in, show Logout -->
+                            <a href="{{ url_for('auth.logout') }}"><i class="fa fa-user"></i> Logout</a>
+                        {% else %}
+                            <!-- User is not logged in, show Login -->
+                            <a href="{{ url_for('auth.login') }}"><i class="fa fa-user"></i> Login</a>
+                        {% endif %}
+                    </li>
+        
+                </ul>
             </div>
-          </div>
+        </div>
+        
         </div>
       </div>
     </div>
@@ -146,14 +162,19 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="{{ url_for('shop.home') }}">Home</a></li>
-              <li class="active"><a href="#">Shop page</a></li>
-              <li><a href="#">Single product</a></li>
-              <li><a href="#">Cart</a></li>
-              <li><a href="#">Checkout</a></li>
-              <li><a href="#">Category</a></li>
-              <li><a href="#">Others</a></li>
-              <li><a href="#">Contact</a></li>
+              {% macro nav_item(url, name) %}
+                <li {% if request.path == url_for(url) and 'under_construction' not in url %} class="active" {% endif %}>
+                  <a href="{{ url_for(url) }}">{{ name }}</a>
+                </li>
+              {% endmacro %}
+              {{ nav_item('shop.home', 'Home') }}
+              {{ nav_item('shop.under_construction', 'Shop page') }}
+              {{ nav_item('shop.under_construction', 'Single product') }}
+              {{ nav_item('shop.under_construction', 'Cart') }}
+              {{ nav_item('shop.under_construction', 'Checkout') }}
+              {{ nav_item('shop.under_construction', 'Category') }}
+              {{ nav_item('shop.under_construction', 'Others') }}
+              {{ nav_item('shop.under_construction', 'Contact') }}
             </ul>
           </div>
         </div>
@@ -166,15 +187,18 @@
         <div class="row">
           <div class="col-md-12">
             <div class="product-bit-title text-center">
-              <h2>Shop</h2>
+              <h2>{{ context.pageTitle }}</h2>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    {% block content %}{% endblock %}
-
+    <div class="single-product-area">
+      <div class="zigzag-bottom"></div>
+      {% block content %}{% endblock %}
+    </div>
+    
     <div class="footer-top-area">
       <div class="zigzag-bottom"></div>
       <div class="container">

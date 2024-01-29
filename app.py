@@ -23,14 +23,16 @@ with app.app_context():
 
 # Import and register blueprints
 from routes.admin import admin
-from routes.home import shop
+from routes.shop import shop 
+from routes.auth import auth
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(shop, url_prefix='/')
+app.register_blueprint(auth, url_prefix='/')
 
 if __name__ == "__main__":
     if app.config['FLASK_ENV'] == 'production':
         app.run(debug=False)
     else:
-        app.run(debug=True)
+        app.run(debug=True, port=7890)
 

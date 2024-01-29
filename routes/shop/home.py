@@ -1,8 +1,7 @@
-from flask import Blueprint, flash, render_template, request, app
+from flask import flash, render_template, request
 from models import Book
 from sqlalchemy.exc import SQLAlchemyError
-
-shop = Blueprint('shop', __name__)
+from . import shop
 
 @shop.route('/')
 def home():

@@ -1,1 +1,1 @@
-from . import admin, home
+from . import admin, auth, shop

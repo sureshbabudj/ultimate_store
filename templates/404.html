@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% set context = {
+  'pageTitle': '404'
+} %}
+
+{% block content %}
+    <div class="container">
+    <h1 class="display-4">404 Not Found</h1>
+    <p class="lead">The requested page could not be found.</p>
+    <p>Return <a href="/">home</a>.</p>
+</div>
+{% endblock %}
