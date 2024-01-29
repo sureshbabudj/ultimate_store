@@ -1,11 +1,16 @@
 from datetime import datetime
 from flask import Flask
 from flask_migrate import Migrate
+import sqlalchemy 
 from config import Config
 from models import db
 
 app = Flask(__name__)
 app.config.from_object(Config)
+connection_string = app.config['SQLALCHEMY_DATABASE_URI']
+engine = sqlalchemy.create_engine(connection_string, pool_pre_ping=True)
+app.config['SQLALCHEMY_ENGINE'] = engine
+
 db.init_app(app)
 migrate = Migrate(app, db)
 
