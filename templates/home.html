@@ -1,7 +1,7 @@
-{% extends 'layout.html' %} 
+{% extends 'layout.html' %}
 
 {% set context = {
-  'pageTitle': 'Shop'
+'pageTitle': 'Shop'
 } %}
 
 {% block content %}
@@ -12,26 +12,15 @@
     <div class="col-md-3 col-sm-6">
       <div class="single-shop-product">
         <div class="product-upper">
-          <img
-            src="{{ book.image_url }}"
-            alt="{{ book.title }}"
-            width="195px"
-          />
+          <img src="{{ book.image_url }}" alt="{{ book.title }}" width="195px" />
         </div>
         <h2><a href="#">{{ book.title }}</a></h2>
         <div class="product-carousel-price">
           <ins>${{ "%.2f"|format(book.price|float) }}</ins>
         </div>
         <div class="product-option-shop">
-          <a
-            class="add_to_cart_button"
-            data-quantity="1"
-            data-product_sku=""
-            data-product_id="{{ book.id }}"
-            rel="nofollow"
-            href="#"
-            >Add to cart</a
-          >
+          <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="{{ book.id }}"
+            rel="nofollow" href="#">Add to cart</a>
         </div>
       </div>
     </div>
@@ -43,28 +32,23 @@
     <nav>
       <ul class="pagination">
         {% if current_page > 1 %}
-        <li>
-          <a
-            href="{{ url_for('shop.home', page=current_page-1) }}"
-            aria-label="Previous"
-          >
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('shop.home', page=current_page-1) }}" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        {% endif %} {% for page_num in range(1, total_pages + 1) %}
-        <li class="{% if page_num == current_page %}active{% endif %}">
-          <a href="{{ url_for('shop.home', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% for page_num in range(1, total_pages + 1) %}
+        <li class="page-item {% if page_num == current_page %}active{% endif %}">
+          <a class="page-link" href="{{ url_for('shop.home', page=page_num) }}">{{ page_num }}</a>
         </li>
-        {% endfor %} {% if current_page < total_pages %}
-        <li>
-          <a
-            href="{{ url_for('shop.home', page=current_page+1) }}"
-            aria-label="Next"
-          >
+        {% endfor %}
+        {% if current_page < total_pages %} <li class="page-item">
+          <a class="page-link" href="{{ url_for('shop.home', page=current_page+1) }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
-        </li>
-        {% endif %}
+          </li>
+          {% endif %}
       </ul>
     </nav>
   </div>

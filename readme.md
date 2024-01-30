@@ -1,4 +1,3 @@
-
 # Ultimate Bookstore
 
 This is a simple Flask application for a bookstore with the ability to add books. It uses Flask-SQLAlchemy for database management and Flask-Migrate for handling database migrations.
@@ -35,6 +34,12 @@ Follow these steps to set up and run the Flask application.
    Activate the virtual environment:
 
    - On Windows:
+
+     make sure to execute below command in Powershell to activate virtual env
+
+     ```bash
+     Set-ExecutionPolicy Unrestricted -Scope Process
+     ```
 
      ```bash
      venv\Scripts\activate
@@ -98,13 +103,11 @@ When you're done using the application, deactivate the virtual environment:
 deactivate
 ```
 
-
 ### Env Variables
 
 FLASK_SECRET_KEY={HEX16}
 DATABASE_URL={DB}
 FLASK_ENV={production|dev}
-
 
 ### Creat database in postgres sql
 
@@ -124,9 +127,9 @@ This Python script (`watcher.py`) monitors changes to CSS and JS files in a spec
 
 ### How to Use
 
-  ```bash
-  pip install watchdog
-  ```
+```bash
+pip install watchdog
+```
 
 ### Usage
 
@@ -162,6 +165,3 @@ Suresh Babu Dhanaraj
 
 - GitHub: [sureshbabudj](https://github.com/sureshbabudj)
 - Email: sureshbabudj@gmail.com
-
-
-
