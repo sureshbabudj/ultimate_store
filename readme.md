@@ -1,7 +1,7 @@
 
 # Ultimate Bookstore
 
-This is a simple Flask application for a children's bookstore with the ability to add books. It uses Flask-SQLAlchemy for database management and Flask-Migrate for handling database migrations.
+This is a simple Flask application for a bookstore with the ability to add books. It uses Flask-SQLAlchemy for database management and Flask-Migrate for handling database migrations.
 
 ## Getting Started
 
@@ -117,10 +117,6 @@ ALTER ROLE admin SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE ultimate_store TO admin;
 
 ```
-
-Certainly! Here's a simple README content for your watcher file:
-
----
 
 ### File Watcher for CSS and JS Files
 
