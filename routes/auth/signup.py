@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user
 from forms import SignUpForm
 from models import User, db
 from . import auth
@@ -16,11 +15,12 @@ def signup():
             return render_template('signup.html', title='Sign Up', form=form)
 
         # Process the form data (create a new user and store in the database)
-        new_user = User(email=form.email.data, password=form.password.data)
+        new_user = User(email=form.email.data)
+        new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
 
-        flash('Account created successfully!', 'success')
+        flash('You have been logged out.', 'success')
         return redirect(url_for('auth.login'))
 
     return render_template('signup.html', title='Sign Up', form=form)

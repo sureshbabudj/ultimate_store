@@ -118,6 +118,48 @@ GRANT ALL PRIVILEGES ON DATABASE ultimate_store TO admin;
 
 ```
 
+Certainly! Here's a simple README content for your watcher file:
+
+---
+
+### File Watcher for CSS and JS Files
+
+This Python script (`watcher.py`) monitors changes to CSS and JS files in a specified directory and automatically runs the `bundle.py` script to update the compressed and combined versions of these files. It uses the `watchdog` library to detect file modifications.
+
+### How to Use
+
+  ```bash
+  pip install watchdog
+  ```
+
+### Usage
+
+1. Place the `watcher.py` script in your project directory.
+2. Open a terminal and navigate to the directory containing `watcher.py`.
+
+3. Edit the `path_to_watch` and `gen_folder` variables in the script to point to the correct directories for your CSS and JS files and the generated files, respectively.
+
+4. Run the script:
+
+   ```bash
+   python watcher.py
+   ```
+
+   The watcher will start monitoring the specified directory for changes.
+
+5. Make changes to your CSS or JS files. When a change is detected, the watcher will automatically run the `bundle.py` script to update the compressed and combined versions of the files.
+
+6. To stop the watcher, press `Ctrl + C` in the terminal.
+
+### Important Notes
+
+- Ensure that both `watcher.py` and `bundle.py` are in the same directory or update the paths accordingly.
+- The watcher ignores changes in the `gen` folder to prevent an endless loop caused by changes to the generated files.
+
+---
+
+Feel free to customize this README to better suit your project's structure and any additional details you want to provide.
+
 ## Author
 
 Suresh Babu Dhanaraj

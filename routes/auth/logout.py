@@ -1,6 +1,4 @@
-
-from curses import flash
-from flask import redirect, url_for
+from flask import redirect, url_for, flash
 from flask_login import login_required, logout_user
 from . import auth
 

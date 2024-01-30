@@ -79,9 +79,6 @@ jQuery(document).ready(function($){
         event.preventDefault();
     });    
     
-    // Bootstrap ScrollPSY
-    $('body').scrollspy({ 
-        target: '.navbar-collapse',
-        offset: 95
-    })      
+    // Bootstrap ScrollPSY todo
+       
 });
