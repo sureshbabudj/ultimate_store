@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% set context = {
+'pageTitle': 'Create book'
+} %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% set submit_text = 'Add Book' %} {% include 'book_form.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

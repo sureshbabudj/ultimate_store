@@ -1,12 +1,16 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %}
+{% set context = {
+'pageTitle': 'Edit book'
+} %}
+
+
+{% block content %}
 
 <div class="container">
-
   <div class="row">
     <div class="col-md-6">
       {% set submit_text = 'Edit Book' %} {% include 'book_form.html' %}
     </div>
   </div>
 </div>
-  {% endblock %}
-
+{% endblock %}
