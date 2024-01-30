@@ -11,6 +11,7 @@ python3 bundle.py
 export FLASK_APP=app.py
 
 # Flask-Migrate commands for database migration
+flask db stamp head
 flask db migrate
 flask db upgrade
 
