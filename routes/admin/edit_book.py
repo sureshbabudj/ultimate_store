@@ -2,10 +2,11 @@ from flask import render_template, flash, redirect, url_for
 from models import db, Book
 from forms import BookForm
 from sqlalchemy.exc import SQLAlchemyError
-
+from flask_login import login_required
 from . import admin
 
 @admin.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
+@login_required
 def edit_book(book_id):
     book = Book.query.get_or_404(book_id)
     form = BookForm(obj=book)

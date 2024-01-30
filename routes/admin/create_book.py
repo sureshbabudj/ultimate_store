@@ -2,10 +2,12 @@ from flask import render_template, flash, redirect, url_for
 from models import db, Book
 from forms import BookForm
 from sqlalchemy.exc import SQLAlchemyError
+from flask_login import login_required
 
 from . import admin
 
 @admin.route('/create_book', methods=['GET', 'POST'])
+@login_required
 def create_book():
     form = BookForm()
 
