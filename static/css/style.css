@@ -69,6 +69,7 @@ body {
     font-size: 13px;
 }
 
+.header-right ul.nav > li > a > i.fa,
 .user-menu ul.nav > li > a > i.fa {
     margin-right: 5px;
 }
@@ -170,7 +171,7 @@ body {
 .mainmenu-area ul.navbar-nav li a {
     color: #6e6a6a;
     font-size: 14px;
-    padding: 20px;
+    padding: 12px 20px;
 }
 
 .mainmenu-area ul.navbar-nav li:hover a,
@@ -445,7 +446,7 @@ body {
 }
 
 .section-title {
-    font-family: "Raleway", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-size: 50px;
     font-weight: 100;
     margin-bottom: 50px;
@@ -616,7 +617,7 @@ body {
 }
 
 .product-wid-title {
-    font-family: raleway;
+    font-family: "Roboto Condensed";
     font-size: 30px;
     font-weight: 100;
     margin-bottom: 40px;
@@ -696,7 +697,7 @@ body {
 .footer-top-area {
     background: none repeat scroll 0 0 #333;
     color: #999;
-    padding: 35px 0 180px;
+    padding: 1rem 0;
 }
 
 
@@ -710,7 +711,7 @@ body {
 }
 
 .footer-wid-title {
-    font-family: raleway;
+    font-family: "Roboto Condensed";
     font-size: 30px;
     font-weight: 100;
     color: #fff
@@ -802,7 +803,6 @@ a:focus {
 .footer-bottom-area {
     background: none repeat scroll 0 0 #000;
     color: #fff;
-    padding-bottom: 40px;
 }
 
 
@@ -869,7 +869,7 @@ ol.slide-indicators li.active {
 }
 
 .product-bit-title h2 {
-    font-family: raleway;
+    font-family: "Roboto Condensed";
     font-size: 50px;
     font-weight: 200;
     margin: 0;
@@ -882,7 +882,7 @@ ol.slide-indicators li.active {
 }
 
 .single-product-area {
-    padding: 80px 0 130px;
+    padding: 2.5rem 0;
 }
 
 
