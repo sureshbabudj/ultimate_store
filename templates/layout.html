@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300" rel="stylesheet" type="text/css" />
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,100" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="/static/gen/packed-5c84d42c.css" id="static_gen_packed_css" />
+  <link rel="stylesheet" href="/static/gen/packed-9e316a01.css" id="static_gen_packed_css" />
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,7 +56,8 @@
           <div class="header-right">
             <ul class="nav justify-content-end">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                  aria-expanded="false">
                   <span class="key">currency :</span><span class="value">USD </span><b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
@@ -66,20 +67,22 @@
                 </ul>
               </li>
               {% if current_user.is_authenticated %}
-                <li class="nav-item dropdown">
-                  <a data-toggle="dropdown" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    <i class="fa fa-user"></i>{{ current_user.email }}
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('shop.under_construction') }}" class="dropdown-item">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a href="{{ url_for('auth.logout') }}" class="dropdown-item">Logout</a></li>
-                  </ul>
-                </li>
+              <li class="nav-item dropdown">
+                <a data-toggle="dropdown" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                  <i class="fa fa-user"></i>{{ current_user.email }}
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ url_for('shop.under_construction') }}" class="dropdown-item">Profile</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a href="{{ url_for('auth.logout') }}" class="dropdown-item">Logout</a></li>
+                </ul>
+              </li>
               {% else %}
-                <li class="nav-item dropdown">
-                  <a href="{{ url_for('auth.login') }}" class="nav-link"><i class="fa fa-user"></i> Login</a>
-                </li>
+              <li class="nav-item dropdown">
+                <a href="{{ url_for('auth.login') }}" class="nav-link"><i class="fa fa-user"></i> Login</a>
+              </li>
               {% endif %}
             </ul>
           </div>
@@ -95,7 +98,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="logo">
-            <h1><a href="{{ url_for('shop.home') }}">Ultimate Store</a></h1>
+            <h1><a href="{{ url_for('shop.home') }}">Ultimate<span>Store</span></a></h1>
           </div>
         </div>
 
@@ -114,13 +117,15 @@
   <div class="mainmenu-area">
     <nav class="navbar navbar-light bg-light navbar-expand-md">
       <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav">
             {% macro nav_item(url, name) %}
-            <li {% if request.path==url_for(url) and 'under_construction' not in url %} class="nav-item active" {% endif %} >
+            <li {% if request.path==url_for(url) and 'under_construction' not in url %} class="nav-item active" {% endif
+              %}>
               <a href="{{ url_for(url) }}">{{ name }}</a>
             </li>
             {% endmacro %}
@@ -243,7 +248,7 @@
   </div>
 
   <script src="https://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="/static/gen/packed-788f9cd6.js" id="static_gen_packed_js"></script>
+  <script type="text/javascript" src="/static/gen/packed-d5923b27.js" id="static_gen_packed_js"></script>
 </body>
 
 </html>

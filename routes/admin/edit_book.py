@@ -18,7 +18,7 @@ def edit_book(book_id):
             book.image_url = form.image_url.data
             db.session.commit()
         except SQLAlchemyError as e:
-            flash(f'Database error: {str(e)}', 'error')
+            flash(f'Database error: {str(e)}', 'danger')
 
         return redirect(url_for('admin.index'))
 

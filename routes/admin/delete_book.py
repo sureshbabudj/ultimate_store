@@ -11,6 +11,6 @@ def delete_book(book_id):
         db.session.delete(book)
         db.session.commit()
     except SQLAlchemyError as e:
-        flash(f'Database error: {str(e)}', 'error')
+        flash(f'Database error: {str(e)}', 'danger')
 
     return redirect(url_for('admin.index'))

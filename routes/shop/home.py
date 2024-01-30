@@ -11,7 +11,7 @@ def home():
     try:
         books = Book.query.paginate(page=page, per_page=per_page, error_out=False)
     except SQLAlchemyError as e:
-        flash(f'Database error: {str(e)}', 'error')
+        flash(f'Database error: {str(e)}', 'danger')
         books = []
 
     return render_template('home.html', books=books.items, current_page=page, total_pages=books.pages)

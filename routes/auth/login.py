@@ -16,7 +16,7 @@ def login():
             flash('Login successful!', 'success')
             return redirect(url_for('shop.home'))
 
-        flash('Invalid email or password', 'error')
+        flash('Invalid email or password', 'danger')
 
     return render_template('login.html', form=form)
 
