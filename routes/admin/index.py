@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for
-from models import Book
+from models import Book, User
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required
 from . import admin
@@ -9,8 +9,9 @@ from . import admin
 def index():
     try:
         books = Book.query.all()
+        users = User.query.all()
     except SQLAlchemyError as e:
         flash(f'Database error: {str(e)}', 'danger')
         books = []
 
-    return render_template("admin.html", books=books)
+    return render_template("admin.html", books=books, users=users)

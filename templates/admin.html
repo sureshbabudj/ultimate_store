@@ -46,5 +46,24 @@
       {% endfor %}
     </tbody>
   </table>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand">User List</a>
+      <form class="d-flex">
+        <a href="{{ url_for('admin.create_book') }}" class="btn btn-success btn-sm">Create User</a>
+      </form>
+    </div>
+  </nav>
+  <ol class="list-group list-group-numbered">
+    {% for user in users %}
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">{{user.email}}</div>
+        joined on n/a
+      </div>
+      <span class="badge bg-primary rounded-pill"> {{user.role}}</span>
+    </li>
+    {% endfor %}
+  </ol>
 </div>
 {% endblock %}
