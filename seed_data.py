@@ -1,3 +1,4 @@
+from psycopg2 import IntegrityError
 import requests
 import random
 from models import db, Book, User
@@ -42,10 +43,28 @@ def generate_fake_users(num_users):
 
     return users
 
+def seed_users():
+    try:
+        # Seed fake users
+        users = generate_fake_users(num_users=5)
+
+        db.session.add_all(users)
+        db.session.commit()  
+    except IntegrityError as e:
+        # Handle the IntegrityError
+        db.session.rollback()  # Rollback the transaction
+        print(f"Error: {e}")
+        print("User with the same email already exists. Skipping user creation.")
+    except Exception as e:
+        # Handle other exceptions
+        db.session.rollback()  # Rollback the transaction
+        print(f"Error: {e}")
+        print("An error occurred while creating users.")
+
 def seed_data():
     # Check if there are any existing records in the Book and User tables
-    if not db.session.query(Book).count() and not db.session.query(User).count():
-
+    #if not db.session.query(Book).count() and not db.session.query(User).count():
+    try:
         # Seed books from Open Library API
         books = get_books_from_open_library()
 
@@ -57,12 +76,17 @@ def seed_data():
 
         db.session.add_all(books + additional_books)
         db.session.commit()
-
-        # Seed fake users
-        users = generate_fake_users(num_users=5)
-
-        db.session.add_all(users)
-        db.session.commit()
+    except IntegrityError as e:
+        # Handle the IntegrityError
+        db.session.rollback()  # Rollback the transaction
+        print(f"Error: {e}")
+        print("Book with the same title already exists. Skipping book creation.")
+    except Exception as e:
+        # Handle other exceptions
+        db.session.rollback()  # Rollback the transaction
+        print(f"Error: {e}")
+        print("An error occurred while creating users.")
 
 if __name__ == '__main__':
     seed_data()
+    seed_users()
