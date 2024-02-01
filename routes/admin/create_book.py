@@ -1,4 +1,5 @@
 from flask import render_template, flash, redirect, url_for
+from decorators import admin_required
 from models import db, Book
 from forms import BookForm
 from sqlalchemy.exc import SQLAlchemyError
@@ -8,6 +9,7 @@ from . import admin
 
 @admin.route('/create_book', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def create_book():
     form = BookForm()
 
