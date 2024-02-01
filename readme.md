@@ -53,9 +53,18 @@ Follow these steps to set up and run the Flask application.
 
 4. **Install dependencies:**
 
+   for installing  the main dependencies, :
+
    ```bash
    pip install -r requirements.txt
    ```
+
+   and for installing dev dependencies for development, use:
+
+   ```bash
+   pip install -r requirements-dev.txt 
+   ```
+
 
 ### Database Migration
 
