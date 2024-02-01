@@ -17,3 +17,7 @@ site.db
 # assets
 .webassets-cache
 static/gen
+
+# dev files
+api_responses.json
+templates/gen

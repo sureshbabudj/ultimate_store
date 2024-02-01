@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from seed_data import seed_data, seed_users
+from seed_data import seed_data
 import sqlalchemy 
 from config import Config
 from models import db, User
@@ -42,5 +42,4 @@ if __name__ == "__main__":
     else:
         with app.app_context():
             seed_data()
-            seed_users()
         app.run(debug=True)

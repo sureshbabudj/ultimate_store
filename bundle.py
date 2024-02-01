@@ -1,4 +1,6 @@
-import os, time, hashlib
+import os
+import time
+import hashlib
 from pathlib import Path
 from csscompressor import compress as css_minify
 from rjsmin import jsmin
@@ -6,6 +8,37 @@ from rjsmin import jsmin
 def generate_hash(file_path):
     unique_info = str(time.time()).encode('utf-8')
     return hashlib.md5(unique_info).hexdigest()[:8]
+
+def create_gen_folder():
+    gen_folder = 'templates/gen'
+    if not os.path.exists(gen_folder):
+        os.makedirs(gen_folder)
+
+def create_header_html(css_file_name):
+    header_content = f'''
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/static/gen/{css_file_name}" id="static_gen_packed_css" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    '''
+
+    with open('templates/gen/header.html', 'w') as header_file:
+        header_file.write(header_content)
+
+def create_footer_html(js_file_name):
+    footer_content = f'''
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/gen/{js_file_name}" id="static_gen_packed_js"></script>
+    '''
+
+    with open('templates/gen/footer.html', 'w') as footer_file:
+        footer_file.write(footer_content)
 
 def remove_old_files():
     gen_folder = 'static/gen'
@@ -60,32 +93,11 @@ def compress(in_files, out_file, in_type='js', verbose=False):
 
     return out_file_with_hash
 
-def replace_file_references(file_path, file_id, new_file_name, type):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
+print('write layout done')
 
-    found = False
-    new_line = f'<link rel="stylesheet" href="/static/gen/{new_file_name}" id="{file_id}" />\n'
-    if type == 'js':
-        new_line = f'<script type="text/javascript" src="/static/gen/{new_file_name}" id="{file_id}"></script>\n'
-
-    for i, line in enumerate(lines):
-        if f'id="{file_id}"' in line:
-            found = True
-            # Replace the line with the new line
-            lines[i] = new_line
-            break
-
-    if not found:
-        print(f'Error: ID "{file_id}" not found in the file.')
-
-    with open(file_path, 'w') as file:
-        file.writelines(lines)
-
-    print('write layout done')
-
-
+create_gen_folder()
 remove_old_files()
+
 # Example usage:
 css = compress(
     [
@@ -114,6 +126,6 @@ js = compress(
    verbose=True
 )
 
-layout_html_path = 'templates/layout.html'
-replace_file_references(layout_html_path, 'static_gen_packed_css', css, 'css')
-replace_file_references(layout_html_path, 'static_gen_packed_js', js, 'js')
+# Create header and footer HTML files
+create_header_html(css)
+create_footer_html(js)
